@@ -19,9 +19,9 @@ properties for serialization, namely, `@JsonUnwrapped`.
 From `com.davidagood.jackson.Payload`:
 
 ```java
-    @JsonUnwrapped
-    @JsonProperty(access = READ_ONLY)
-    private Metadata metadata;
+@JsonUnwrapped
+@JsonProperty(access = READ_ONLY)
+private Metadata metadata;
 ```
 
 See discussion on why the additional annotation, 
@@ -50,19 +50,19 @@ straightforward solution.
 From `com.davidagood.jackson.Payload`:
 
 ```java
-    @JsonGetter("data")
-    public Map<String, List<User>> getWrappedUsersForSerialization() {
-        return Map.of("users", this.users);
-    }
+@JsonGetter("data")
+public Map<String, List<User>> getWrappedUsersForSerialization() {
+    return Map.of("users", this.users);
+}
 ```
 
 Note that we also have to tell Jackson to ignore the field and make sure it doesn't 
 have a getter:
 
 ```java
-    @JsonIgnore
-    @Getter(AccessLevel.NONE)
-    private List<User> users;
+@JsonIgnore
+@Getter(AccessLevel.NONE)
+private List<User> users;
 ```
 
 ### Supporting Deserialization with These Techniques
@@ -79,13 +79,13 @@ For the serialization wrapping scenario, the constructor takes a `Map` which rep
 From `com.davidagood.jackson.Payload`:
 
 ```java
-    @JsonCreator
-    public Payload(@JsonProperty("appId") int appId,
-                   @JsonProperty("appName") String appName,
-                   @JsonProperty("data") Map<String, List<User>> data) {
-        this.metadata = new Metadata(appId, appName);
-        this.users = data.get("users");
-    }
+@JsonCreator
+public Payload(@JsonProperty("appId") int appId,
+               @JsonProperty("appName") String appName,
+               @JsonProperty("data") Map<String, List<User>> data) {
+    this.metadata = new Metadata(appId, appName);
+    this.users = data.get("users");
+}
 ```
 
 If you're using non-immutable value classes (e.g. using Lombok's `@Data`), the solution  
