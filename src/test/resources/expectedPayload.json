@@ -1,0 +1,16 @@
+{
+    "appName": "app-123",
+    "appId": 123,
+    "data": {
+        "users": [
+            {
+                "id": 1,
+                "email": "one@example.com"
+            },
+            {
+                "id": 2,
+                "email": "two@example.com"
+            }
+        ]
+    }
+}
